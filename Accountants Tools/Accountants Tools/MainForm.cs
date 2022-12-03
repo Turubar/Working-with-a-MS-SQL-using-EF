@@ -16,6 +16,5 @@ namespace Accountants_Tools
         {
             InitializeComponent();
         }
-
     }
 }
