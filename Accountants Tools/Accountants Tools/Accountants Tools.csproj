@@ -8,16 +8,27 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.2.0" />
-    <PackageReference Include="EntityFramework.ru" Version="6.2.0" />
+    <None Remove="entity_framework\EmployeeDatabaseModel.edmx" />
   </ItemGroup>
 
   <ItemGroup>
+    <EntityDeploy Include="entity_framework\EmployeeDatabaseModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EmployeeDatabaseModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Security" />
   </ItemGroup>
 
   <ItemGroup>
-    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+    <Compile Update="entity_framework\EmployeeDatabaseModel.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EmployeeDatabaseModel.edmx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>
