@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Security" />
   </ItemGroup>
 

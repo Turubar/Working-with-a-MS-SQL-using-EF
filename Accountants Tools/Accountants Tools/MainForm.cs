@@ -18,5 +18,13 @@ namespace Accountants_Tools
         {
             InitializeComponent();
         }
+
+        private void CompanyFormButton_Click(object sender, EventArgs e)
+        {
+            CompanyForm form = new CompanyForm();
+            this.Hide();
+            form.ShowDialog();
+            this.Show();
+        }
     }
 }
