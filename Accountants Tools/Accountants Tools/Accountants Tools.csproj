@@ -19,16 +19,46 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.2.0" />
+    <PackageReference Include="EntityFramework.ru" Version="6.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Security" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="entity_framework\EmployeeDatabaseContext.Context.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EmployeeDatabaseContext.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Update="entity_framework\EmployeeDatabaseContext.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EmployeeDatabaseContext.tt</DependentUpon>
+    </Compile>
     <Compile Update="entity_framework\EmployeeDatabaseModel.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>EmployeeDatabaseModel.edmx</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="entity_framework\EmployeeDatabaseContext.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EmployeeDatabaseContext.Context.cs</LastGenOutput>
+    </None>
+    <None Update="entity_framework\EmployeeDatabaseContext.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EmployeeDatabaseContext.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 
 </Project>
