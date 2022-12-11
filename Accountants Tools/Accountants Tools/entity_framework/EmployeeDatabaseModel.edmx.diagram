@@ -5,13 +5,13 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="cd7a879cf06146c0a36a953111f1ca77" Name="Diagram1" ZoomLevel="74">
-        <EntityTypeShape EntityType="EmployeeDatabaseModel.Company" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="EmployeeDatabaseModel.Company_positions" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="EmployeeDatabaseModel.Employee" Width="1.5" PointX="2.375" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EmployeeDatabaseModel.Employment_contracts" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
-        <AssociationConnector Association="EmployeeDatabaseModel.FK__Company_p__id_co__571DF1D5" ManuallyRouted="false" />
-        <AssociationConnector Association="EmployeeDatabaseModel.FK__Employmen__id_po__5AEE82B9" ManuallyRouted="false" />
-        <AssociationConnector Association="EmployeeDatabaseModel.FK__Employmen__id_em__59FA5E80" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="EmployeeDatabaseModel.Company" Width="1.5" PointX="0.75" PointY="1" />
+        <EntityTypeShape EntityType="EmployeeDatabaseModel.Company_positions" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="EmployeeDatabaseModel.Employee" Width="1.5" PointX="3" PointY="4.75" />
+        <EntityTypeShape EntityType="EmployeeDatabaseModel.Employment_contracts" Width="1.5" PointX="5.25" PointY="1.125" />
+        <AssociationConnector Association="EmployeeDatabaseModel.FK__Company_p__id_co__571DF1D5" />
+        <AssociationConnector Association="EmployeeDatabaseModel.FK__Employmen__id_po__5AEE82B9" />
+        <AssociationConnector Association="EmployeeDatabaseModel.FK__Employmen__id_em__59FA5E80" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -29,10 +29,10 @@ date_of_creation DATE NOT NULL,
 company_description NVARCHAR(MAX) DEFAULT ('Not defined'))
 GO
 
-CREATE TABLE Company_positions (
+CREATE TABLE Company_positions1 (
 id BIGINT PRIMARY KEY IDENTITY NOT NULL,
 name_position NVARCHAR(100) NOT NULL,
-salary_for_position INT NOT NULL,
+salary_for_position DECIMAL(10, 2) NOT NULL,
 description_position NVARCHAR(MAX) NOT NULL,
 id_company BIGINT NOT NULL, FOREIGN KEY (id_company) REFERENCES Company (id))
 GO

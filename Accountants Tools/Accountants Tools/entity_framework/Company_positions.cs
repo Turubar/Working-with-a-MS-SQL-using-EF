@@ -11,7 +11,9 @@ namespace Accountants_Tools.entity_framework
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Linq;
+    using System.Windows.Forms;
+
     public partial class Company_positions
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,12 +24,29 @@ namespace Accountants_Tools.entity_framework
     
         public long id { get; set; }
         public string name_position { get; set; }
-        public int salary_for_position { get; set; }
+        public decimal salary_for_position { get; set; }
         public string description_position { get; set; }
         public long id_company { get; set; }
     
         public virtual Company Company { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employment_contracts> Employment_contracts { get; set; }
+        public static void UploadPositionsInDGV(ref DataGridView dgv)
+        {
+            using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
+            {
+                var data = from position in context.Company_positions
+                           select new
+                           {
+                               ID = position.id,
+                               Должность = position.name_position,
+                               Зарплата = position.salary_for_position,
+                               Описание_должности = position.description_position,
+                               Компания = position.Company.company_name
+                           };
+
+                dgv.DataSource = data.ToList();
+            }
+        }
     }
 }
