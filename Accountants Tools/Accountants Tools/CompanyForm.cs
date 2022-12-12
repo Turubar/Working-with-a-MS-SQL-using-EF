@@ -71,7 +71,7 @@ namespace Accountants_Tools
             CrudDGV.Rows[0].Cells[5].Value = "Not defined";
 
             //page Positions
-
+            
             Company_positions.UploadPositionsInDGV(ref PositionDGV);
 
             #region заменить все символы '_' в заголовках столбцов
@@ -333,7 +333,7 @@ namespace Accountants_Tools
                 else
                     updateDataCompany[CrudDGV.CurrentCell.ColumnIndex] = "";
             }
-        }// работа над вводимыми данными
+        }
 
         private void CrudDGV_CellEnter(object sender, DataGridViewCellEventArgs e)
         {

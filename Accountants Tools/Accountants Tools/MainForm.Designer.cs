@@ -45,6 +45,7 @@ namespace Accountants_Tools
             this.EmployeeFormButton.TabIndex = 0;
             this.EmployeeFormButton.Text = "Сотрудники";
             this.EmployeeFormButton.UseVisualStyleBackColor = true;
+            this.EmployeeFormButton.Click += new System.EventHandler(this.EmployeeFormButton_Click);
             // 
             // CompanyFormButton
             // 
@@ -82,6 +83,7 @@ namespace Accountants_Tools
             this.Controls.Add(this.EmployeeFormButton);
             this.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Электронный бухгалтер";

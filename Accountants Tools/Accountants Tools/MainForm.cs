@@ -26,5 +26,13 @@ namespace Accountants_Tools
             form.ShowDialog();
             this.Show();
         }
+
+        private void EmployeeFormButton_Click(object sender, EventArgs e)
+        {
+            EmployeeForm form = new EmployeeForm();
+            this.Hide();
+            form.ShowDialog();
+            this.Show();
+        }
     }
 }
