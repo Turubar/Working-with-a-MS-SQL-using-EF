@@ -8,13 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="entity_framework\EmployeeDatabaseModel.edmx" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EntityDeploy Include="entity_framework\EmployeeDatabaseModel.edmx">
+    <EntityDeploy Include="DatabaseEmployeeModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EmployeeDatabaseModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>DatabaseEmployeeModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
   </ItemGroup>
 
@@ -30,6 +26,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="DatabaseEmployeeModel.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DatabaseEmployeeModel.edmx</DependentUpon>
+    </Compile>
     <Compile Update="entity_framework\EmployeeDatabaseContext.Context.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -39,11 +44,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>EmployeeDatabaseContext.tt</DependentUpon>
-    </Compile>
-    <Compile Update="entity_framework\EmployeeDatabaseModel.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>EmployeeDatabaseModel.edmx</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -56,10 +56,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EmployeeDatabaseContext.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 
 </Project>

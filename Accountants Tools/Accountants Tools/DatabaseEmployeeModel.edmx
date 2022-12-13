@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Хранилище EmployeeDatabaseModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище EmployeeDatabaseModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Company">
           <Key>
             <PropertyRef Name="id" />
@@ -106,84 +106,67 @@
             <End Role="Employment_contracts" EntitySet="Employment_contracts" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EmployeeDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="EmployeeDatabaseEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Company" EntityType="EmployeeDatabaseModel.Company" />
-          <EntitySet Name="Company_positions" EntityType="EmployeeDatabaseModel.Company_positions" />
-          <EntitySet Name="Employee" EntityType="EmployeeDatabaseModel.Employee" />
-          <EntitySet Name="Employment_contracts" EntityType="EmployeeDatabaseModel.Employment_contracts" />
-          <AssociationSet Name="FK__Company_p__id_co__571DF1D5" Association="EmployeeDatabaseModel.FK__Company_p__id_co__571DF1D5">
-            <End Role="Company" EntitySet="Company" />
-            <End Role="Company_positions" EntitySet="Company_positions" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Employmen__id_po__5AEE82B9" Association="EmployeeDatabaseModel.FK__Employmen__id_po__5AEE82B9">
-            <End Role="Company_positions" EntitySet="Company_positions" />
-            <End Role="Employment_contracts" EntitySet="Employment_contracts" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Employmen__id_em__59FA5E80" Association="EmployeeDatabaseModel.FK__Employmen__id_em__59FA5E80">
-            <End Role="Employee" EntitySet="Employee" />
-            <End Role="Employment_contracts" EntitySet="Employment_contracts" />
-          </AssociationSet>
-        </EntityContainer>
         <EntityType Name="Company">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="company_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="last_name_owner" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="first_name_owner" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="middle_name_owner" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="date_of_creation" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="company_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="last_name_owner" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="first_name_owner" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="middle_name_owner" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="date_of_creation" Type="DateTime" Nullable="false" />
           <Property Name="company_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Company_positions" Relationship="EmployeeDatabaseModel.FK__Company_p__id_co__571DF1D5" FromRole="Company" ToRole="Company_positions" />
+          <NavigationProperty Name="Company_positions" Relationship="Self.FK__Company_p__id_co__571DF1D5" FromRole="Company" ToRole="Company_positions" />
         </EntityType>
         <EntityType Name="Company_positions">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name_position" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="salary_for_position" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="description_position" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="name_position" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="salary_for_position" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="description_position" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="id_company" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Company" Relationship="EmployeeDatabaseModel.FK__Company_p__id_co__571DF1D5" FromRole="Company_positions" ToRole="Company" />
-          <NavigationProperty Name="Employment_contracts" Relationship="EmployeeDatabaseModel.FK__Employmen__id_po__5AEE82B9" FromRole="Company_positions" ToRole="Employment_contracts" />
+          <NavigationProperty Name="Company" Relationship="Self.FK__Company_p__id_co__571DF1D5" FromRole="Company_positions" ToRole="Company" />
+          <NavigationProperty Name="Employment_contracts" Relationship="Self.FK__Employmen__id_po__5AEE82B9" FromRole="Company_positions" ToRole="Employment_contracts" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="last_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="first_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="middle_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="gender" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="true" />
-          <Property Name="details_passport" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
-          <Property Name="date_of_birth" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="country_of_birth" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="middle_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="gender" Type="String" MaxLength="7" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="details_passport" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="date_of_birth" Type="DateTime" Nullable="false" />
+          <Property Name="country_of_birth" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="residency" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="number_phone" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
           <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Employment_contracts" Relationship="EmployeeDatabaseModel.FK__Employmen__id_em__59FA5E80" FromRole="Employee" ToRole="Employment_contracts" />
+          <NavigationProperty Name="Employment_contracts" Relationship="Self.FK__Employmen__id_em__59FA5E80" FromRole="Employee" ToRole="Employment_contracts" />
         </EntityType>
         <EntityType Name="Employment_contracts">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="date_of_conclusion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="date_of_conclusion" Type="DateTime" Nullable="false" />
           <Property Name="id_employee" Type="Int64" Nullable="false" />
           <Property Name="id_position" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Company_positions" Relationship="EmployeeDatabaseModel.FK__Employmen__id_po__5AEE82B9" FromRole="Employment_contracts" ToRole="Company_positions" />
-          <NavigationProperty Name="Employee" Relationship="EmployeeDatabaseModel.FK__Employmen__id_em__59FA5E80" FromRole="Employment_contracts" ToRole="Employee" />
+          <NavigationProperty Name="Company_positions" Relationship="Self.FK__Employmen__id_po__5AEE82B9" FromRole="Employment_contracts" ToRole="Company_positions" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK__Employmen__id_em__59FA5E80" FromRole="Employment_contracts" ToRole="Employee" />
         </EntityType>
         <Association Name="FK__Company_p__id_co__571DF1D5">
-          <End Type="EmployeeDatabaseModel.Company" Role="Company" Multiplicity="1" />
-          <End Type="EmployeeDatabaseModel.Company_positions" Role="Company_positions" Multiplicity="*" />
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="Company_positions" Type="Self.Company_positions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Company">
               <PropertyRef Name="id" />
@@ -194,8 +177,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Employmen__id_po__5AEE82B9">
-          <End Type="EmployeeDatabaseModel.Company_positions" Role="Company_positions" Multiplicity="1" />
-          <End Type="EmployeeDatabaseModel.Employment_contracts" Role="Employment_contracts" Multiplicity="*" />
+          <End Role="Company_positions" Type="Self.Company_positions" Multiplicity="1" />
+          <End Role="Employment_contracts" Type="Self.Employment_contracts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Company_positions">
               <PropertyRef Name="id" />
@@ -206,8 +189,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Employmen__id_em__59FA5E80">
-          <End Type="EmployeeDatabaseModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="EmployeeDatabaseModel.Employment_contracts" Role="Employment_contracts" Multiplicity="*" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Employment_contracts" Type="Self.Employment_contracts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="id" />
@@ -217,7 +200,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        </Schema>
+        <EntityContainer Name="EmployeeDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Company" EntityType="Self.Company" />
+          <EntitySet Name="Company_positions" EntityType="Self.Company_positions" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <EntitySet Name="Employment_contracts" EntityType="Self.Employment_contracts" />
+          <AssociationSet Name="FK__Company_p__id_co__571DF1D5" Association="Self.FK__Company_p__id_co__571DF1D5">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Company_positions" EntitySet="Company_positions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employmen__id_po__5AEE82B9" Association="Self.FK__Employmen__id_po__5AEE82B9">
+            <End Role="Company_positions" EntitySet="Company_positions" />
+            <End Role="Employment_contracts" EntitySet="Employment_contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employmen__id_em__59FA5E80" Association="Self.FK__Employmen__id_em__59FA5E80">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Employment_contracts" EntitySet="Employment_contracts" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -226,51 +227,51 @@
           <EntitySetMapping Name="Company">
             <EntityTypeMapping TypeName="EmployeeDatabaseModel.Company">
               <MappingFragment StoreEntitySet="Company">
-                <ScalarProperty Name="company_description" ColumnName="company_description" />
-                <ScalarProperty Name="date_of_creation" ColumnName="date_of_creation" />
-                <ScalarProperty Name="middle_name_owner" ColumnName="middle_name_owner" />
-                <ScalarProperty Name="first_name_owner" ColumnName="first_name_owner" />
-                <ScalarProperty Name="last_name_owner" ColumnName="last_name_owner" />
-                <ScalarProperty Name="company_name" ColumnName="company_name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="company_name" ColumnName="company_name" />
+                <ScalarProperty Name="last_name_owner" ColumnName="last_name_owner" />
+                <ScalarProperty Name="first_name_owner" ColumnName="first_name_owner" />
+                <ScalarProperty Name="middle_name_owner" ColumnName="middle_name_owner" />
+                <ScalarProperty Name="date_of_creation" ColumnName="date_of_creation" />
+                <ScalarProperty Name="company_description" ColumnName="company_description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Company_positions">
             <EntityTypeMapping TypeName="EmployeeDatabaseModel.Company_positions">
               <MappingFragment StoreEntitySet="Company_positions">
-                <ScalarProperty Name="id_company" ColumnName="id_company" />
-                <ScalarProperty Name="description_position" ColumnName="description_position" />
-                <ScalarProperty Name="salary_for_position" ColumnName="salary_for_position" />
-                <ScalarProperty Name="name_position" ColumnName="name_position" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name_position" ColumnName="name_position" />
+                <ScalarProperty Name="salary_for_position" ColumnName="salary_for_position" />
+                <ScalarProperty Name="description_position" ColumnName="description_position" />
+                <ScalarProperty Name="id_company" ColumnName="id_company" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employee">
             <EntityTypeMapping TypeName="EmployeeDatabaseModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="number_phone" ColumnName="number_phone" />
-                <ScalarProperty Name="residency" ColumnName="residency" />
-                <ScalarProperty Name="country_of_birth" ColumnName="country_of_birth" />
-                <ScalarProperty Name="date_of_birth" ColumnName="date_of_birth" />
-                <ScalarProperty Name="details_passport" ColumnName="details_passport" />
-                <ScalarProperty Name="gender" ColumnName="gender" />
-                <ScalarProperty Name="middle_name" ColumnName="middle_name" />
-                <ScalarProperty Name="first_name" ColumnName="first_name" />
-                <ScalarProperty Name="last_name" ColumnName="last_name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="middle_name" ColumnName="middle_name" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="details_passport" ColumnName="details_passport" />
+                <ScalarProperty Name="date_of_birth" ColumnName="date_of_birth" />
+                <ScalarProperty Name="country_of_birth" ColumnName="country_of_birth" />
+                <ScalarProperty Name="residency" ColumnName="residency" />
+                <ScalarProperty Name="number_phone" ColumnName="number_phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employment_contracts">
             <EntityTypeMapping TypeName="EmployeeDatabaseModel.Employment_contracts">
               <MappingFragment StoreEntitySet="Employment_contracts">
-                <ScalarProperty Name="id_position" ColumnName="id_position" />
-                <ScalarProperty Name="id_employee" ColumnName="id_employee" />
-                <ScalarProperty Name="date_of_conclusion" ColumnName="date_of_conclusion" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="date_of_conclusion" ColumnName="date_of_conclusion" />
+                <ScalarProperty Name="id_employee" ColumnName="id_employee" />
+                <ScalarProperty Name="id_position" ColumnName="id_position" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

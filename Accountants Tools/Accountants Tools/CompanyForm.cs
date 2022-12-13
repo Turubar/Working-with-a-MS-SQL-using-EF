@@ -25,7 +25,7 @@ namespace Accountants_Tools
         private void CompanyForm_Load(object sender, EventArgs e)
         {
             //page Company
-            Company.UploadCompanyInDGV(ref CompanyDGV);
+            ServiceClass.UploadCompanyInDGV(ref CompanyDGV);
 
             #region заменить все символы '_' в заголовках столбцов
             for (int i = 0; i < CompanyDGV.Columns.Count; i++)
@@ -72,7 +72,7 @@ namespace Accountants_Tools
 
             //page Positions
             
-            Company_positions.UploadPositionsInDGV(ref PositionDGV);
+            ServiceClass.UploadPositionsInDGV(ref PositionDGV);
 
             #region заменить все символы '_' в заголовках столбцов
             for (int i = 0; i < PositionDGV.Columns.Count; i++)
@@ -92,7 +92,7 @@ namespace Accountants_Tools
 
         private void RefreshDataButton_Click(object sender, EventArgs e)
         {
-            Company.UploadCompanyInDGV(ref CompanyDGV);
+            ServiceClass.UploadCompanyInDGV(ref CompanyDGV);
             SearchTB.Text = "";
         }
 
@@ -402,7 +402,7 @@ namespace Accountants_Tools
 
         private void RefreshPositionButton_Click(object sender, EventArgs e)
         {
-            Company_positions.UploadPositionsInDGV(ref PositionDGV);
+            ServiceClass.UploadPositionsInDGV(ref PositionDGV);
             SearchPositionTB.Text = "";
         }
 

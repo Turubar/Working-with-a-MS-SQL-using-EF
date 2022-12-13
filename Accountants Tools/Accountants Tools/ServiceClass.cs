@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Accountants_Tools.entity_framework;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -92,6 +93,44 @@ namespace Accountants_Tools
             for (int i = 0; i < tb.Count(); i++)
             {
                 tb[i].Text = dgv.Rows[dgv.SelectedRows[0].Index].Cells[i + 1].Value.ToString();
+            }
+        }
+
+        public static void UploadCompanyInDGV(ref DataGridView dgv)
+        {
+            using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
+            {
+                var data = from company in context.Company
+                           select new
+                           {
+                               ID = company.id,
+                               Название_компании = company.company_name,
+                               Фамилия_владельца = company.last_name_owner,
+                               Имя_владельца = company.first_name_owner,
+                               Отчество_владельца = company.middle_name_owner,
+                               Дата_создания_компании = company.date_of_creation,
+                               Описание_компании = company.company_description
+                           };
+
+                dgv.DataSource = data.ToList();
+            }
+        }
+
+        public static void UploadPositionsInDGV(ref DataGridView dgv)
+        {
+            using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
+            {
+                var data = from position in context.Company_positions
+                           select new
+                           {
+                               ID = position.id,
+                               Должность = position.name_position,
+                               Зарплата = position.salary_for_position,
+                               Описание_должности = position.description_position,
+                               Компания = position.Company.company_name
+                           };
+
+                dgv.DataSource = data.ToList();
             }
         }
     }
