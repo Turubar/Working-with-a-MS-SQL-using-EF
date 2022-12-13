@@ -85,5 +85,77 @@ namespace Accountants_Tools
                 StateEmployeeLabel.Text = labelText[2];
             }
         }
+
+        private void FullNameTB_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void FullName_Leave(object sender, EventArgs e)
+        {
+            TextBox tb = sender as TextBox;
+            tb.Text = ServiceClass.RemoveAllExceptLetters(tb.Text);
+
+            if (tb.Text.Length > 0)
+            {
+                tb.Text = tb.Text.ToLower();
+                char[] array = tb.Text.ToArray();
+                array[0] = char.ToUpper(array[0]);
+                tb.Text = new string(array);
+            }
+
+            tb.Select(0, 0);
+        }
+
+        private void PasportDetailTB_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (PasportDetailTB.Text.Length < 4 || PasportDetailTB.Text.Length >= 5)
+            {
+                if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+                {
+                    e.Handled = true;
+                }
+            }
+            else
+            {
+                if (e.KeyChar != '-' && e.KeyChar != (char)Keys.Back)
+                {
+                    e.Handled = true;
+                }
+            }
+        }
+
+        private void PasportDetailTB_Leave(object sender, EventArgs e)
+        {
+            if(PasportDetailTB.Text.Length != 11)
+            {
+                PasportDetailTB.Text = "";
+            }
+
+            PasportDetailTB.Select(0, 0);
+        }
+
+        private void CountryBirthTB_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar) && e.KeyChar != (char)Keys.Back && e.KeyChar != ' ')
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void CountryBirthTB_Leave(object sender, EventArgs e)
+        {
+            CountryBirthTB.Text = ServiceClass.RemoveSpaces(CountryBirthTB.Text);
+            CountryBirthTB.Select(0, 0);
+        }
+
+        private void ResidencyEmployeeTB_Leave(object sender, EventArgs e)
+        {
+            ResidencyEmployeeTB.Text = ServiceClass.RemoveSpaces(ResidencyEmployeeTB.Text);
+            ResidencyEmployeeTB.Select(0, 0);
+        }
     }
 }

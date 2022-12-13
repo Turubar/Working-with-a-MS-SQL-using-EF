@@ -36,6 +36,30 @@ namespace Accountants_Tools
             return sb.ToString();
         }
 
+        public static string RemoveAllSpaces(string str)
+        {
+            do
+            {
+                str = str.Replace(" ", "");
+            }
+            while (str.Contains(" "));
+
+            return str;
+        }
+
+        public static string RemoveAllExceptLetters(string str)
+        {
+            StringBuilder sb = new StringBuilder(str.Length); 
+            foreach(char c in str)
+            {
+                if(char.IsLetter(c))
+                {
+                    sb.Append(c);
+                }
+            }
+            
+            return sb.ToString();
+        }
 
         public static List<string> SelectedData(DataGridView dgvCompany, DataGridView dgvUpdateCompany)
         {

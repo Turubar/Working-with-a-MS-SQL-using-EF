@@ -181,6 +181,8 @@ namespace Accountants_Tools
             this.LastNameTB.Name = "LastNameTB";
             this.LastNameTB.Size = new System.Drawing.Size(246, 29);
             this.LastNameTB.TabIndex = 2;
+            this.LastNameTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FullNameTB_KeyPress);
+            this.LastNameTB.Leave += new System.EventHandler(this.FullName_Leave);
             // 
             // FirstNameTB
             // 
@@ -189,6 +191,8 @@ namespace Accountants_Tools
             this.FirstNameTB.Name = "FirstNameTB";
             this.FirstNameTB.Size = new System.Drawing.Size(246, 29);
             this.FirstNameTB.TabIndex = 3;
+            this.FirstNameTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FullNameTB_KeyPress);
+            this.FirstNameTB.Leave += new System.EventHandler(this.FullName_Leave);
             // 
             // FirstNameLabel
             // 
@@ -207,6 +211,8 @@ namespace Accountants_Tools
             this.MiddleNameTB.Name = "MiddleNameTB";
             this.MiddleNameTB.Size = new System.Drawing.Size(246, 29);
             this.MiddleNameTB.TabIndex = 4;
+            this.MiddleNameTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FullNameTB_KeyPress);
+            this.MiddleNameTB.Leave += new System.EventHandler(this.FullName_Leave);
             // 
             // MiddleNameLabel
             // 
@@ -270,6 +276,8 @@ namespace Accountants_Tools
             this.PasportDetailTB.Name = "PasportDetailTB";
             this.PasportDetailTB.Size = new System.Drawing.Size(246, 29);
             this.PasportDetailTB.TabIndex = 26;
+            this.PasportDetailTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PasportDetailTB_KeyPress);
+            this.PasportDetailTB.Leave += new System.EventHandler(this.PasportDetailTB_Leave);
             // 
             // PasportDetailLabel
             // 
@@ -299,6 +307,8 @@ namespace Accountants_Tools
             this.CountryBirthTB.Name = "CountryBirthTB";
             this.CountryBirthTB.Size = new System.Drawing.Size(246, 29);
             this.CountryBirthTB.TabIndex = 29;
+            this.CountryBirthTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CountryBirthTB_KeyPress);
+            this.CountryBirthTB.Leave += new System.EventHandler(this.CountryBirthTB_Leave);
             // 
             // CountryBirthLabel
             // 
@@ -312,11 +322,13 @@ namespace Accountants_Tools
             // 
             // ResidencyEmployeeTB
             // 
+            this.ResidencyEmployeeTB.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ResidencyEmployeeTB.Location = new System.Drawing.Point(552, 546);
             this.ResidencyEmployeeTB.MaxLength = 150;
             this.ResidencyEmployeeTB.Name = "ResidencyEmployeeTB";
             this.ResidencyEmployeeTB.Size = new System.Drawing.Size(246, 29);
             this.ResidencyEmployeeTB.TabIndex = 31;
+            this.ResidencyEmployeeTB.Leave += new System.EventHandler(this.ResidencyEmployeeTB_Leave);
             // 
             // ResidencyEmployeeLabel
             // 

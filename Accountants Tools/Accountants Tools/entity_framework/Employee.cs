@@ -25,7 +25,6 @@ namespace Accountants_Tools.entity_framework
         public string first_name { get; set; }
         public string middle_name { get; set; }
         public string gender { get; set; }
-        public int age { get; set; }
         public string details_passport { get; set; }
         public System.DateTime date_of_birth { get; set; }
         public string country_of_birth { get; set; }

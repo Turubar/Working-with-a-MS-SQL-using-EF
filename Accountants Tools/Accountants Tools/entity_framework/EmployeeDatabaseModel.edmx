@@ -36,7 +36,6 @@
           <Property Name="first_name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="middle_name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="gender" Type="nvarchar" MaxLength="7" Nullable="false" />
-          <Property Name="age" Type="int" Nullable="false" />
           <Property Name="details_passport" Type="nvarchar" MaxLength="11" Nullable="false" />
           <Property Name="date_of_birth" Type="date" Nullable="false" />
           <Property Name="country_of_birth" Type="nvarchar" MaxLength="100" Nullable="false" />
@@ -163,7 +162,6 @@
           <Property Name="first_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="middle_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="gender" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="true" />
-          <Property Name="age" Type="Int32" Nullable="false" />
           <Property Name="details_passport" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
           <Property Name="date_of_birth" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="country_of_birth" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -219,7 +217,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -258,7 +256,6 @@
                 <ScalarProperty Name="country_of_birth" ColumnName="country_of_birth" />
                 <ScalarProperty Name="date_of_birth" ColumnName="date_of_birth" />
                 <ScalarProperty Name="details_passport" ColumnName="details_passport" />
-                <ScalarProperty Name="age" ColumnName="age" />
                 <ScalarProperty Name="gender" ColumnName="gender" />
                 <ScalarProperty Name="middle_name" ColumnName="middle_name" />
                 <ScalarProperty Name="first_name" ColumnName="first_name" />
