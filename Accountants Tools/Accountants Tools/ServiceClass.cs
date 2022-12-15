@@ -100,7 +100,7 @@ namespace Accountants_Tools
         {
             using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
             {
-                var data = from company in context.Company
+                var data = from company in context.Company orderby company.id
                            select new
                            {
                                ID = company.id,
@@ -120,7 +120,7 @@ namespace Accountants_Tools
         {
             using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
             {
-                var data = from position in context.Company_positions
+                var data = from position in context.Company_positions orderby position.id
                            select new
                            {
                                ID = position.id,
@@ -128,6 +128,44 @@ namespace Accountants_Tools
                                Зарплата = position.salary_for_position,
                                Описание_должности = position.description_position,
                                Компания = position.Company.company_name
+                           };
+
+                dgv.DataSource = data.ToList();
+            }
+        }
+
+        public static void UploadPositionsShortInDGV(ref DataGridView dgv)
+        {
+            using(EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
+            {
+                var data = from position in context.Company_positions orderby position.id
+                           select new
+                           {
+                               ID = position.id,
+                               Должность = position.name_position,
+                               Зарплата = position.salary_for_position,
+                               Компания = position.Company.company_name
+                           };
+
+                dgv.DataSource = data.ToList();
+            }
+        }
+
+        public static void UploadEmployeeInDGV(ref DataGridView dgv)
+        {
+            using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
+            {
+                var data = from contract in context.Employment_contracts
+                           orderby contract.id
+                           select new
+                           {
+                               ID = contract.id,
+                               Имя_сотрудника = contract.Employee.last_name + " " + contract.Employee.first_name + " " + contract.Employee.middle_name,
+                               Должность = contract.Company_positions.name_position,
+                               Зарплата = contract.Company_positions.salary_for_position,
+                               Компания = contract.Company_positions.Company.company_name,
+                               Контактные_данные = contract.Employee.number_phone + ", " + contract.Employee.email,
+                               Нанят = contract.date_of_conclusion
                            };
 
                 dgv.DataSource = data.ToList();

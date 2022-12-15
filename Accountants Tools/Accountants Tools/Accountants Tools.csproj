@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EntityDeploy Include="DatabaseEmployeeModel.edmx">
+    <EntityDeploy Include="entity_framework\DatabaseEmployeeModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DatabaseEmployeeModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="DatabaseEmployeeModel.Designer.cs">
+    <Compile Update="entity_framework\DatabaseEmployeeModel.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>DatabaseEmployeeModel.edmx</DependentUpon>

@@ -54,7 +54,7 @@ namespace Accountants_Tools
             this.CountryBirthLabel = new System.Windows.Forms.Label();
             this.ResidencyEmployeeTB = new System.Windows.Forms.TextBox();
             this.ResidencyEmployeeLabel = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.PhoneNumberTB = new System.Windows.Forms.TextBox();
             this.PhoneNumberLabel = new System.Windows.Forms.Label();
             this.EmailEmployeeTB = new System.Windows.Forms.TextBox();
             this.EmailEmployeeLabel = new System.Windows.Forms.Label();
@@ -62,14 +62,14 @@ namespace Accountants_Tools
             this.PositionLabel = new System.Windows.Forms.Label();
             this.CompanyTB = new System.Windows.Forms.TextBox();
             this.CompanyLabel = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.PositionDGV = new System.Windows.Forms.DataGridView();
             this.CrudEmployeeButton = new System.Windows.Forms.Button();
             this.RefreshPositionButton = new System.Windows.Forms.Button();
             this.SearchPositionLabel = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.SearchPositionTB = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.EmployeeDGV)).BeginInit();
             this.GenderEmployeeGB.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PositionDGV)).BeginInit();
             this.SuspendLayout();
             // 
             // EmployeeDGV
@@ -88,6 +88,7 @@ namespace Accountants_Tools
             this.EmployeeDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.EmployeeDGV.Size = new System.Drawing.Size(1660, 389);
             this.EmployeeDGV.TabIndex = 0;
+            this.EmployeeDGV.SelectionChanged += new System.EventHandler(this.EmployeeDGV_SelectionChanged);
             // 
             // DeleteEmployeeRB
             // 
@@ -96,7 +97,6 @@ namespace Accountants_Tools
             this.DeleteEmployeeRB.Name = "DeleteEmployeeRB";
             this.DeleteEmployeeRB.Size = new System.Drawing.Size(101, 25);
             this.DeleteEmployeeRB.TabIndex = 13;
-            this.DeleteEmployeeRB.TabStop = true;
             this.DeleteEmployeeRB.Text = "Удаление";
             this.DeleteEmployeeRB.UseVisualStyleBackColor = true;
             this.DeleteEmployeeRB.CheckedChanged += new System.EventHandler(this.DeleteEmployeeRB_CheckedChanged);
@@ -108,7 +108,6 @@ namespace Accountants_Tools
             this.UpdateEmployeeRB.Name = "UpdateEmployeeRB";
             this.UpdateEmployeeRB.Size = new System.Drawing.Size(126, 25);
             this.UpdateEmployeeRB.TabIndex = 12;
-            this.UpdateEmployeeRB.TabStop = true;
             this.UpdateEmployeeRB.Text = "Обновление";
             this.UpdateEmployeeRB.UseVisualStyleBackColor = true;
             this.UpdateEmployeeRB.CheckedChanged += new System.EventHandler(this.UpdateEmployeeRB_CheckedChanged);
@@ -121,7 +120,6 @@ namespace Accountants_Tools
             this.AddEmployeeRB.Name = "AddEmployeeRB";
             this.AddEmployeeRB.Size = new System.Drawing.Size(123, 25);
             this.AddEmployeeRB.TabIndex = 11;
-            this.AddEmployeeRB.TabStop = true;
             this.AddEmployeeRB.Text = "Добавление";
             this.AddEmployeeRB.UseVisualStyleBackColor = true;
             this.AddEmployeeRB.CheckedChanged += new System.EventHandler(this.AddEmployeeRB_CheckedChanged);
@@ -136,6 +134,7 @@ namespace Accountants_Tools
             this.RefreshEmployeeButton.TabIndex = 14;
             this.RefreshEmployeeButton.Text = "Обновить таблицу";
             this.RefreshEmployeeButton.UseVisualStyleBackColor = true;
+            this.RefreshEmployeeButton.Click += new System.EventHandler(this.RefreshEmployeeButton_Click);
             // 
             // SearchEmployeeLabel
             // 
@@ -153,13 +152,14 @@ namespace Accountants_Tools
             this.SearchEmployeeTB.Name = "SearchEmployeeTB";
             this.SearchEmployeeTB.Size = new System.Drawing.Size(314, 29);
             this.SearchEmployeeTB.TabIndex = 1;
+            this.SearchEmployeeTB.TextChanged += new System.EventHandler(this.SearchEmployeeTB_TextChanged);
             // 
             // StateEmployeeLabel
             // 
             this.StateEmployeeLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.StateEmployeeLabel.Location = new System.Drawing.Point(369, 411);
+            this.StateEmployeeLabel.Location = new System.Drawing.Point(372, 411);
             this.StateEmployeeLabel.Name = "StateEmployeeLabel";
-            this.StateEmployeeLabel.Size = new System.Drawing.Size(623, 21);
+            this.StateEmployeeLabel.Size = new System.Drawing.Size(614, 21);
             this.StateEmployeeLabel.TabIndex = 17;
             this.StateEmployeeLabel.Text = "работника в базу данных, заполните приведенные ниже поля";
             this.StateEmployeeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -275,7 +275,7 @@ namespace Accountants_Tools
             this.PasportDetailTB.MaxLength = 11;
             this.PasportDetailTB.Name = "PasportDetailTB";
             this.PasportDetailTB.Size = new System.Drawing.Size(246, 29);
-            this.PasportDetailTB.TabIndex = 26;
+            this.PasportDetailTB.TabIndex = 6;
             this.PasportDetailTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PasportDetailTB_KeyPress);
             this.PasportDetailTB.Leave += new System.EventHandler(this.PasportDetailTB_Leave);
             // 
@@ -297,7 +297,7 @@ namespace Accountants_Tools
             this.DateBirthDTP.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
             this.DateBirthDTP.Name = "DateBirthDTP";
             this.DateBirthDTP.Size = new System.Drawing.Size(246, 29);
-            this.DateBirthDTP.TabIndex = 28;
+            this.DateBirthDTP.TabIndex = 5;
             this.DateBirthDTP.Value = new System.DateTime(2022, 12, 12, 0, 0, 0, 0);
             // 
             // CountryBirthTB
@@ -306,7 +306,7 @@ namespace Accountants_Tools
             this.CountryBirthTB.MaxLength = 100;
             this.CountryBirthTB.Name = "CountryBirthTB";
             this.CountryBirthTB.Size = new System.Drawing.Size(246, 29);
-            this.CountryBirthTB.TabIndex = 29;
+            this.CountryBirthTB.TabIndex = 7;
             this.CountryBirthTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CountryBirthTB_KeyPress);
             this.CountryBirthTB.Leave += new System.EventHandler(this.CountryBirthTB_Leave);
             // 
@@ -327,7 +327,7 @@ namespace Accountants_Tools
             this.ResidencyEmployeeTB.MaxLength = 150;
             this.ResidencyEmployeeTB.Name = "ResidencyEmployeeTB";
             this.ResidencyEmployeeTB.Size = new System.Drawing.Size(246, 29);
-            this.ResidencyEmployeeTB.TabIndex = 31;
+            this.ResidencyEmployeeTB.TabIndex = 8;
             this.ResidencyEmployeeTB.Leave += new System.EventHandler(this.ResidencyEmployeeTB_Leave);
             // 
             // ResidencyEmployeeLabel
@@ -340,13 +340,15 @@ namespace Accountants_Tools
             this.ResidencyEmployeeLabel.TabIndex = 32;
             this.ResidencyEmployeeLabel.Text = "Местожительство:";
             // 
-            // textBox1
+            // PhoneNumberTB
             // 
-            this.textBox1.Location = new System.Drawing.Point(552, 621);
-            this.textBox1.MaxLength = 12;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(246, 29);
-            this.textBox1.TabIndex = 33;
+            this.PhoneNumberTB.Location = new System.Drawing.Point(552, 621);
+            this.PhoneNumberTB.MaxLength = 12;
+            this.PhoneNumberTB.Name = "PhoneNumberTB";
+            this.PhoneNumberTB.Size = new System.Drawing.Size(246, 29);
+            this.PhoneNumberTB.TabIndex = 9;
+            this.PhoneNumberTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PhoneNumberTB_KeyPress);
+            this.PhoneNumberTB.Leave += new System.EventHandler(this.PhoneNumberTB_Leave);
             // 
             // PhoneNumberLabel
             // 
@@ -364,7 +366,8 @@ namespace Accountants_Tools
             this.EmailEmployeeTB.MaxLength = 100;
             this.EmailEmployeeTB.Name = "EmailEmployeeTB";
             this.EmailEmployeeTB.Size = new System.Drawing.Size(246, 29);
-            this.EmailEmployeeTB.TabIndex = 35;
+            this.EmailEmployeeTB.TabIndex = 10;
+            this.EmailEmployeeTB.Leave += new System.EventHandler(this.EmailEmployeeTB_Leave);
             // 
             // EmailEmployeeLabel
             // 
@@ -378,6 +381,7 @@ namespace Accountants_Tools
             // 
             // PositionTB
             // 
+            this.PositionTB.Enabled = false;
             this.PositionTB.Location = new System.Drawing.Point(822, 546);
             this.PositionTB.MaxLength = 100;
             this.PositionTB.Name = "PositionTB";
@@ -396,6 +400,7 @@ namespace Accountants_Tools
             // 
             // CompanyTB
             // 
+            this.CompanyTB.Enabled = false;
             this.CompanyTB.Location = new System.Drawing.Point(822, 621);
             this.CompanyTB.MaxLength = 150;
             this.CompanyTB.Name = "CompanyTB";
@@ -412,22 +417,23 @@ namespace Accountants_Tools
             this.CompanyLabel.TabIndex = 40;
             this.CompanyLabel.Text = "Компания:";
             // 
-            // dataGridView1
+            // PositionDGV
             // 
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToResizeColumns = false;
-            this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.dataGridView1.Location = new System.Drawing.Point(1092, 447);
-            this.dataGridView1.MultiSelect = false;
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(580, 128);
-            this.dataGridView1.TabIndex = 41;
+            this.PositionDGV.AllowUserToDeleteRows = false;
+            this.PositionDGV.AllowUserToResizeColumns = false;
+            this.PositionDGV.AllowUserToResizeRows = false;
+            this.PositionDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.PositionDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.PositionDGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.PositionDGV.Location = new System.Drawing.Point(1092, 447);
+            this.PositionDGV.MultiSelect = false;
+            this.PositionDGV.Name = "PositionDGV";
+            this.PositionDGV.RowHeadersVisible = false;
+            this.PositionDGV.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.PositionDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.PositionDGV.Size = new System.Drawing.Size(580, 128);
+            this.PositionDGV.TabIndex = 41;
+            this.PositionDGV.SelectionChanged += new System.EventHandler(this.PositionDGV_SelectionChanged);
             // 
             // CrudEmployeeButton
             // 
@@ -437,9 +443,10 @@ namespace Accountants_Tools
             this.CrudEmployeeButton.Location = new System.Drawing.Point(1455, 581);
             this.CrudEmployeeButton.Name = "CrudEmployeeButton";
             this.CrudEmployeeButton.Size = new System.Drawing.Size(217, 69);
-            this.CrudEmployeeButton.TabIndex = 42;
+            this.CrudEmployeeButton.TabIndex = 12;
             this.CrudEmployeeButton.Text = "Добавить";
             this.CrudEmployeeButton.UseVisualStyleBackColor = true;
+            this.CrudEmployeeButton.Click += new System.EventHandler(this.CrudEmployeeButton_Click);
             // 
             // RefreshPositionButton
             // 
@@ -451,6 +458,7 @@ namespace Accountants_Tools
             this.RefreshPositionButton.TabIndex = 43;
             this.RefreshPositionButton.Text = "Обновить таблицу";
             this.RefreshPositionButton.UseVisualStyleBackColor = true;
+            this.RefreshPositionButton.Click += new System.EventHandler(this.RefreshPositionButton_Click);
             // 
             // SearchPositionLabel
             // 
@@ -462,12 +470,13 @@ namespace Accountants_Tools
             this.SearchPositionLabel.TabIndex = 44;
             this.SearchPositionLabel.Text = "Найти должность:";
             // 
-            // textBox2
+            // SearchPositionTB
             // 
-            this.textBox2.Location = new System.Drawing.Point(1092, 620);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(354, 29);
-            this.textBox2.TabIndex = 45;
+            this.SearchPositionTB.Location = new System.Drawing.Point(1092, 620);
+            this.SearchPositionTB.Name = "SearchPositionTB";
+            this.SearchPositionTB.Size = new System.Drawing.Size(354, 29);
+            this.SearchPositionTB.TabIndex = 11;
+            this.SearchPositionTB.TextChanged += new System.EventHandler(this.SearchPositionTB_TextChanged);
             // 
             // EmployeeForm
             // 
@@ -475,18 +484,18 @@ namespace Accountants_Tools
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1684, 661);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.SearchPositionTB);
             this.Controls.Add(this.SearchPositionLabel);
             this.Controls.Add(this.RefreshPositionButton);
             this.Controls.Add(this.CrudEmployeeButton);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.PositionDGV);
             this.Controls.Add(this.CompanyTB);
             this.Controls.Add(this.CompanyLabel);
             this.Controls.Add(this.PositionTB);
             this.Controls.Add(this.PositionLabel);
             this.Controls.Add(this.EmailEmployeeTB);
             this.Controls.Add(this.EmailEmployeeLabel);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.PhoneNumberTB);
             this.Controls.Add(this.PhoneNumberLabel);
             this.Controls.Add(this.ResidencyEmployeeTB);
             this.Controls.Add(this.ResidencyEmployeeLabel);
@@ -521,7 +530,7 @@ namespace Accountants_Tools
             ((System.ComponentModel.ISupportInitialize)(this.EmployeeDGV)).EndInit();
             this.GenderEmployeeGB.ResumeLayout(false);
             this.GenderEmployeeGB.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PositionDGV)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -554,7 +563,7 @@ namespace Accountants_Tools
         private System.Windows.Forms.Label CountryBirthLabel;
         private System.Windows.Forms.TextBox ResidencyEmployeeTB;
         private System.Windows.Forms.Label ResidencyEmployeeLabel;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox PhoneNumberTB;
         private System.Windows.Forms.Label PhoneNumberLabel;
         private System.Windows.Forms.TextBox EmailEmployeeTB;
         private System.Windows.Forms.Label EmailEmployeeLabel;
@@ -562,10 +571,10 @@ namespace Accountants_Tools
         private System.Windows.Forms.Label PositionLabel;
         private System.Windows.Forms.TextBox CompanyTB;
         private System.Windows.Forms.Label CompanyLabel;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView PositionDGV;
         private System.Windows.Forms.Button CrudEmployeeButton;
         private System.Windows.Forms.Button RefreshPositionButton;
         private System.Windows.Forms.Label SearchPositionLabel;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox SearchPositionTB;
     }
 }

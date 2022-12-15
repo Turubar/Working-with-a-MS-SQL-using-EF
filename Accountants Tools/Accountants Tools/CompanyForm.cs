@@ -397,7 +397,11 @@ namespace Accountants_Tools
             //PositionDGV.Columns[2].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             #endregion
 
-
+            using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
+            {
+                var data = from company in context.Company where company.company_name.Contains(CompanyPositionTB.Text) select company.company_name;
+                CompanyNameCB.Items.AddRange(data.ToArray());
+            }
         }
 
         private void RefreshPositionButton_Click(object sender, EventArgs e)
