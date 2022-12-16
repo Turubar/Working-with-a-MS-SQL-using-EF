@@ -19,80 +19,83 @@ namespace Accountants_Tools
         }
 
         List<string> updateDataCompany = new List<string>();
-        TextBox[] dataTB;
+        TextBox[] arrayTextBoxPosition;
         string oldNamePosition;
 
         private void CompanyForm_Load(object sender, EventArgs e)
         {
-            //page Company
-            ServiceClass.UploadCompanyInDGV(ref CompanyDGV);
+            #region Вкладка Компаний (CompanyPage) в TabControl (MainTC)
 
-            #region заменить все символы '_' в заголовках столбцов
-            for (int i = 0; i < CompanyDGV.Columns.Count; i++)
-            {
-                if (i != 0)
-                {
-                    CrudDGV.Columns.Add((DataGridViewColumn)CompanyDGV.Columns[i].Clone());
-                    CrudDGV.Columns[i-1].ReadOnly = false;
+            #region Настройка сетки Компаний (CompanyDGV)
 
-                    CrudDGV.Columns[i-1].HeaderText = CompanyDGV.Columns[i].HeaderText.Replace('_', ' ');
-                    CrudDGV.Columns[i-1].Resizable = DataGridViewTriState.False;
-                }
+            ServiceClass.UploadCompanyDataInDGV(ref CompanyDGV);
+            ServiceClass.RemoveUnderlinesInColumns(ref CompanyDGV);
 
-                CompanyDGV.Columns[i].HeaderText = CompanyDGV.Columns[i].HeaderText.Replace('_', ' ');
-                CompanyDGV.Columns[i].Resizable = DataGridViewTriState.False;
-            }
+            CompanyDGV.Columns[0].Width = 50;
+            CompanyDGV.Columns[1].Width = 250;
+            CompanyDGV.Columns[2].Width = 200;
+            CompanyDGV.Columns[3].Width = 175;
+            CompanyDGV.Columns[4].Width = 200;
+            CompanyDGV.Columns[5].Width = 235;
+            CompanyDGV.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             #endregion
 
-            #region вручную задать ширину столбцам
-            CompanyDGV.Columns[0].Width = 50;
-            CompanyDGV.Columns[1].Width = 200;
-            CompanyDGV.Columns[2].Width = 200;
-            CompanyDGV.Columns[3].Width = 160;
-            CompanyDGV.Columns[4].Width = 200;
-            CompanyDGV.Columns[5].Width = 240;
-            CompanyDGV.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            #region Настройка сетки добавления, обновления и удаления компаний (CrudDGV)
+
+            for (int i = 0; i < CompanyDGV.Columns.Count - 1; i++)
+            {
+                CrudDGV.Columns.Add((DataGridViewColumn)CompanyDGV.Columns[i + 1].Clone());
+
+                CrudDGV.Columns[i].ReadOnly = false;
+                CrudDGV.Columns[i].Resizable = DataGridViewTriState.False;
+            }
+
+            ServiceClass.RemoveUnderlinesInColumns(ref CrudDGV);
+
             CrudDGV.Columns[0].Width = 200;
             CrudDGV.Columns[1].Width = 200;
             CrudDGV.Columns[2].Width = 160;
             CrudDGV.Columns[3].Width = 200;
             CrudDGV.Columns[4].Width = 240;
             CrudDGV.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            #endregion
 
-            #region ограничение на ввод кол-ва символов в столбцы
             (CrudDGV.Columns[0] as DataGridViewTextBoxColumn).MaxInputLength = 100;
             (CrudDGV.Columns[1] as DataGridViewTextBoxColumn).MaxInputLength = 100;
             (CrudDGV.Columns[2] as DataGridViewTextBoxColumn).MaxInputLength = 100;
             (CrudDGV.Columns[3] as DataGridViewTextBoxColumn).MaxInputLength = 100;
             (CrudDGV.Columns[4] as DataGridViewTextBoxColumn).MaxInputLength = 10;
-            #endregion 
 
             CrudDGV.Rows[0].Cells[5].Value = "Not defined";
 
-            //page Positions
-            
-            ServiceClass.UploadPositionsInDGV(ref PositionDGV);
-
-            #region заменить все символы '_' в заголовках столбцов
-            for (int i = 0; i < PositionDGV.Columns.Count; i++)
-            {
-                PositionDGV.Columns[i].HeaderText = PositionDGV.Columns[i].HeaderText.Replace('_', ' ');
-                PositionDGV.Columns[i].Resizable = DataGridViewTriState.False;
-            }
             #endregion
 
-            using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
-            {
-                var data = from company in context.Company where company.company_name.Contains(CompanyPositionTB.Text) select company.company_name;
-                CompanyNameCB.Items.AddRange(data.ToArray());
-            }
-            dataTB = new TextBox[4] { NamePositionTB, SalaryPositionTB, DescriptionPositionTB, CompanyPositionTB };
+            #endregion
+
+            #region Вкладка Должностей компаний (PositionPage) в TabControl (MainTC)
+
+            #region Настройка сетки Должностей компаний
+            ServiceClass.UploadPositionsDataInDGV(ref PositionDGV);
+            ServiceClass.RemoveUnderlinesInColumns(ref PositionDGV);
+
+            MainTC.SelectedTab = PositionPage;
+            PositionDGV.Columns[0].Width = 30;
+            PositionDGV.Columns[1].Width = 275;
+            PositionDGV.Columns[2].Width = 75;
+            PositionDGV.Columns[3].Width = 350;
+            PositionDGV.Columns[4].Width = 300;
+            MainTC.SelectedTab = CompanyPage;
+            #endregion
+
+            ServiceClass.UploadCompanyNameInComboBox(ref CompanyNameCB);
+
+            arrayTextBoxPosition = new TextBox[4] { NamePositionTB, SalaryPositionTB, DescriptionPositionTB, CompanyPositionTB };
+            
+            #endregion
         }
 
-        private void RefreshDataButton_Click(object sender, EventArgs e)
+        private void RefreshCompanyButton_Click(object sender, EventArgs e)
         {
-            ServiceClass.UploadCompanyInDGV(ref CompanyDGV);
+            ServiceClass.UploadCompanyDataInDGV(ref CompanyDGV);
             SearchTB.Text = "";
         }
 
@@ -100,7 +103,7 @@ namespace Accountants_Tools
         {
             using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
             {
-                var data = from company in context.Company where 
+                var seachData = from company in context.Company where 
                            company.company_name.Contains(SearchTB.Text) || 
                            company.last_name_owner.Contains(SearchTB.Text) ||
                            company.first_name_owner.Contains(SearchTB.Text) ||
@@ -118,7 +121,7 @@ namespace Accountants_Tools
                                Описание_компании = company.company_description
                            };
 
-                CompanyDGV.DataSource = data.ToList();
+                CompanyDGV.DataSource = seachData.ToList();
 
                 if (UpdateRB.Checked || DeleteRB.Checked)
                 {
@@ -189,55 +192,11 @@ namespace Accountants_Tools
 
         private void CrudButton_Click(object sender, EventArgs e)
         {
-            if(AddRB.Checked)
-            {
-                for(int i = 0; i < CrudDGV.Rows[0].Cells.Count - 1; i++)
-                {
-                    if(CrudDGV.Rows[0].Cells[i].Value == null)
-                    {
-                        MessageBox.Show("Не все поля заполнены!");
-                        return;
-                    }    
-                }
+            string companyName = "";
+            IQueryable<Company> validCompanyName = null;
+            int idUpdatedCompany = 0;
 
-                bool date = DateTime.TryParse(CrudDGV.Rows[0].Cells[4].Value.ToString(), out DateTime dt);
-                if(!date)
-                {
-                    MessageBox.Show("Не все поля заполнены!");
-                    return;
-                }
-
-                using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
-                {
-                    string newCompanyName = CrudDGV.Rows[0].Cells[0].Value.ToString();
-                    var data = from company in context.Company where company.company_name == newCompanyName select company;
-
-                    if(data.ToList().Count > 0)
-                    {
-                        MessageBox.Show("Такая компания уже существует, попробуйте другое название!");
-                        return;
-                    }
-
-                    Company newCompany = new Company
-                    {
-                        company_name = CrudDGV.Rows[0].Cells[0].Value.ToString(),
-                        last_name_owner = CrudDGV.Rows[0].Cells[1].Value.ToString(),
-                        first_name_owner = CrudDGV.Rows[0].Cells[2].Value.ToString(),
-                        middle_name_owner = CrudDGV.Rows[0].Cells[3].Value.ToString(),
-                        date_of_creation = Convert.ToDateTime(CrudDGV.Rows[0].Cells[4].Value.ToString()),
-                        company_description = CrudDGV.Rows[0].Cells[5].Value.ToString()
-                    };
-
-                    context.Company.Add(newCompany);
-                    context.SaveChanges();
-
-                    MessageBox.Show("Компания добавлена!");
-                    CrudDGV.Rows.Remove(CrudDGV.Rows[0]);
-
-                    RefreshDataButton_Click(null, null);
-                }
-            }
-            else if(UpdateRB.Checked)
+            if(AddRB.Checked || UpdateRB.Checked)
             {
                 for (int i = 0; i < CrudDGV.Rows[0].Cells.Count - 1; i++)
                 {
@@ -255,22 +214,57 @@ namespace Accountants_Tools
                     return;
                 }
 
-                using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
+                companyName = CrudDGV.Rows[0].Cells[0].Value.ToString();
+
+                using (var context = new EmployeeDatabaseEntities())
                 {
-                    string newCompanyName = CrudDGV.Rows[0].Cells[0].Value.ToString();
-                    int id = Convert.ToInt32(CompanyDGV.SelectedRows[0].Cells[0].Value);
+                    if (AddRB.Checked)
+                    {
+                        validCompanyName = from company in context.Company where company.company_name == companyName select company;
+                    }
+                    else if (UpdateRB.Checked)
+                    {
+                        idUpdatedCompany = Convert.ToInt32(CompanyDGV.SelectedRows[0].Cells[0].Value);
+                        validCompanyName = from company in context.Company where company.company_name == companyName && company.id != idUpdatedCompany select company;
+                    }
 
-                    var data = from company in context.Company where company.company_name == newCompanyName && company.id != id select company;
-
-                    if (data.ToList().Count > 0)
+                    if (validCompanyName.ToList().Count > 0)
                     {
                         MessageBox.Show("Такая компания уже существует, попробуйте другое название!");
                         return;
                     }
+                }
+            }
 
-                    Company updateCompany = context.Company.Find(id);
+            if(AddRB.Checked)
+            {
+                using (var context = new EmployeeDatabaseEntities())
+                {
+                    Company newCompany = new Company
+                    {
+                        company_name = CrudDGV.Rows[0].Cells[0].Value.ToString(),
+                        last_name_owner = CrudDGV.Rows[0].Cells[1].Value.ToString(),
+                        first_name_owner = CrudDGV.Rows[0].Cells[2].Value.ToString(),
+                        middle_name_owner = CrudDGV.Rows[0].Cells[3].Value.ToString(),
+                        date_of_creation = Convert.ToDateTime(CrudDGV.Rows[0].Cells[4].Value.ToString()),
+                        company_description = CrudDGV.Rows[0].Cells[5].Value.ToString()
+                    };
 
-                    updateCompany.id = id;
+                    context.Company.Add(newCompany);
+                    context.SaveChanges();
+
+                    MessageBox.Show("Компания добавлена!");
+                    CrudDGV.Rows.Remove(CrudDGV.Rows[0]);
+                    RefreshCompanyButton_Click(null, null);
+                }
+            }
+            else if(UpdateRB.Checked)
+            {
+                using (var context = new EmployeeDatabaseEntities())
+                {
+                    Company updateCompany = context.Company.Find(idUpdatedCompany);
+
+                    updateCompany.id = idUpdatedCompany;
                     updateCompany.company_name = CrudDGV.Rows[0].Cells[0].Value.ToString();
                     updateCompany.last_name_owner = CrudDGV.Rows[0].Cells[1].Value.ToString();
                     updateCompany.first_name_owner = CrudDGV.Rows[0].Cells[2].Value.ToString();
@@ -281,12 +275,12 @@ namespace Accountants_Tools
                     context.SaveChanges();
 
                     MessageBox.Show("Данные компании обновлены!");
-                    RefreshDataButton_Click(null, null);
+                    RefreshCompanyButton_Click(null, null);
                 }
             }
             else if(DeleteRB.Checked)
             {
-                using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
+                using (var context = new EmployeeDatabaseEntities())
                 {
                     if (CompanyDGV.SelectedRows.Count > 0)
                     {
@@ -298,7 +292,7 @@ namespace Accountants_Tools
                         context.SaveChanges();
 
                         MessageBox.Show("Выбранная компания удалена!");
-                        RefreshDataButton_Click(null, null);
+                        RefreshCompanyButton_Click(null, null);
                     }
                 }
             }
@@ -387,26 +381,22 @@ namespace Accountants_Tools
 
         private void MainTC_SelectedIndexChanged(object sender, EventArgs e)
         {
-            #region вручную задать ширину столбцам
-            PositionDGV.Columns[0].Width = 30;
-            PositionDGV.Columns[1].Width = 275;
-            PositionDGV.Columns[2].Width = 75;
-            PositionDGV.Columns[3].Width = 350;
-            PositionDGV.Columns[4].Width = 300;
-            //PositionDGV.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            //PositionDGV.Columns[2].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            #endregion
-
-            using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
+            if (MainTC.SelectedTab == CompanyPage)
             {
-                var data = from company in context.Company where company.company_name.Contains(CompanyPositionTB.Text) select company.company_name;
-                CompanyNameCB.Items.AddRange(data.ToArray());
+                RefreshCompanyButton_Click(null, null);
+            }
+
+            if (MainTC.SelectedTab == PositionPage)
+            {
+                CompanyNameCB.Items.Clear();
+                ServiceClass.UploadCompanyNameInComboBox(ref CompanyNameCB);
+                RefreshPositionButton_Click(null, null);
             }
         }
 
         private void RefreshPositionButton_Click(object sender, EventArgs e)
         {
-            ServiceClass.UploadPositionsInDGV(ref PositionDGV);
+            ServiceClass.UploadPositionsDataInDGV(ref PositionDGV);
             SearchPositionTB.Text = "";
         }
 
@@ -465,13 +455,13 @@ namespace Accountants_Tools
 
                 if(PositionDGV.SelectedRows.Count > 0)
                 {
-                    ServiceClass.SelectedDataTB(ref PositionDGV, ref dataTB);
+                    ServiceClass.SelectedDataTB(ref PositionDGV, ref arrayTextBoxPosition);
                     oldNamePosition = NamePositionTB.Text;
                 }
                 else
                 {
                     SearchPositionTB.Text = "";
-                    ServiceClass.SelectedDataTB(ref PositionDGV, ref dataTB);
+                    ServiceClass.SelectedDataTB(ref PositionDGV, ref arrayTextBoxPosition);
                     oldNamePosition = NamePositionTB.Text;
                 }
             }
@@ -489,13 +479,13 @@ namespace Accountants_Tools
 
                 if (PositionDGV.SelectedRows.Count > 0)
                 {
-                    ServiceClass.SelectedDataTB(ref PositionDGV, ref dataTB);
+                    ServiceClass.SelectedDataTB(ref PositionDGV, ref arrayTextBoxPosition);
                     oldNamePosition = NamePositionTB.Text;
                 }
                 else
                 {
                     SearchPositionTB.Text = "";
-                    ServiceClass.SelectedDataTB(ref PositionDGV, ref dataTB);
+                    ServiceClass.SelectedDataTB(ref PositionDGV, ref arrayTextBoxPosition);
                 }
             }
         }
@@ -561,9 +551,13 @@ namespace Accountants_Tools
 
         private void CrudPositionButton_Click(object sender, EventArgs e)
         {
-            if (AddPositionRB.Checked)
+            decimal salaryPosition = 0;
+            IQueryable<Company_positions> validPosition = null;
+            long idCompany = 0;
+
+            if(AddPositionRB.Checked || UpdatePositionRB.Checked)
             {
-                foreach (TextBox tb in dataTB)
+                foreach (TextBox tb in arrayTextBoxPosition)
                 {
                     if (tb.Text == "")
                     {
@@ -579,28 +573,47 @@ namespace Accountants_Tools
                     return;
                 }
 
-                using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
+                salaryPosition = salary;
+
+                using(var context = new EmployeeDatabaseEntities())
                 {
-                    var positionRecurring = from position in context.Company_positions where (position.name_position == NamePositionTB.Text) && (position.Company.company_name == CompanyPositionTB.Text) select position;
-                    if (positionRecurring.Count() > 0)
+                    if(AddPositionRB.Checked)
+                    {
+                        validPosition = from position in context.Company_positions where (position.name_position == NamePositionTB.Text) && (position.Company.company_name == CompanyPositionTB.Text) select position;
+                    }
+                    else if (UpdatePositionRB.Checked)
+                    {
+                        validPosition = from position in context.Company_positions where (position.name_position == NamePositionTB.Text && position.name_position != oldNamePosition) && (position.Company.company_name == CompanyPositionTB.Text) select position;
+                    }
+
+                    if (validPosition.Count() > 0)
                     {
                         MessageBox.Show($"У компании [{CompanyPositionTB.Text}] уже есть должность [{NamePositionTB.Text}]");
                         return;
                     }
 
-                    var idCompany = from company in context.Company where company.company_name == CompanyPositionTB.Text select company.id;
-                    if (idCompany.Count() < 1)
+                    var id = from company in context.Company where company.company_name == CompanyPositionTB.Text select company.id;
+
+                    if (id.Count() < 1)
                     {
                         MessageBox.Show($"Компания [{CompanyPositionTB.Text}] не существует!");
                         return;
                     }
 
+                    idCompany = id.First();
+                }
+            }
+
+            if (AddPositionRB.Checked)
+            {
+                using (var context = new EmployeeDatabaseEntities())
+                {
                     Company_positions newPosition = new Company_positions
                     {
                         name_position = NamePositionTB.Text,
-                        salary_for_position = salary,
+                        salary_for_position = salaryPosition,
                         description_position = DescriptionPositionTB.Text,
-                        id_company = idCompany.First()
+                        id_company = idCompany
                     };
 
                     context.Company_positions.Add(newPosition);
@@ -611,42 +624,12 @@ namespace Accountants_Tools
             }
             else if (UpdatePositionRB.Checked)
             {
-                foreach (TextBox tb in dataTB)
+                using (var context = new EmployeeDatabaseEntities())
                 {
-                    if (tb.Text == "")
-                    {
-                        MessageBox.Show("Не все поля заполнены!");
-                        return;
-                    }
-                }
-
-                bool salaryResult = decimal.TryParse(SalaryPositionTB.Text, out decimal salary);
-                if (!salaryResult)
-                {
-                    MessageBox.Show("Поле с зарплатой заполнено неверно!");
-                    return;
-                }
-
-                using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
-                {
-                    var positionRecurring = from position in context.Company_positions where (position.name_position == NamePositionTB.Text && position.name_position != oldNamePosition) && (position.Company.company_name == CompanyPositionTB.Text) select position;
-                    if (positionRecurring.Count() > 0)
-                    {
-                        MessageBox.Show($"У компании [{CompanyPositionTB.Text}] уже есть должность [{NamePositionTB.Text}]");
-                        return;
-                    }
-
-                    var idCompany = from company in context.Company where company.company_name == CompanyPositionTB.Text select company.id;
-                    if (idCompany.Count() < 1)
-                    {
-                        MessageBox.Show($"Компания [{CompanyPositionTB.Text}] не существует!");
-                        return;
-                    }
-
                     Company_positions updatePosition = context.Company_positions.Find(PositionDGV.Rows[PositionDGV.SelectedRows[0].Index].Cells[0].Value);
 
                     updatePosition.name_position = NamePositionTB.Text;
-                    updatePosition.salary_for_position = salary;
+                    updatePosition.salary_for_position = salaryPosition;
                     updatePosition.description_position = DescriptionPositionTB.Text;
 
                     context.SaveChanges();
@@ -656,7 +639,7 @@ namespace Accountants_Tools
             }
             else if (DeletePositionRB.Checked)
             {
-                using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
+                using (var context = new EmployeeDatabaseEntities())
                 {
                     if (PositionDGV.SelectedRows.Count > 0)
                     {
@@ -700,7 +683,7 @@ namespace Accountants_Tools
             {
                 if(PositionDGV.SelectedRows.Count > 0)
                 {
-                    ServiceClass.SelectedDataTB(ref PositionDGV, ref dataTB);
+                    ServiceClass.SelectedDataTB(ref PositionDGV, ref arrayTextBoxPosition);
                     oldNamePosition = NamePositionTB.Text;
                 }
             }
@@ -711,5 +694,4 @@ namespace Accountants_Tools
             CompanyPositionTB.Text = ServiceClass.RemoveSpaces(CompanyPositionTB.Text);
         }
     }
-    
 }

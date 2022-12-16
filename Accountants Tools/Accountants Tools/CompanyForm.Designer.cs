@@ -38,7 +38,7 @@ namespace Accountants_Tools
             this.UpdateRB = new System.Windows.Forms.RadioButton();
             this.AddRB = new System.Windows.Forms.RadioButton();
             this.CrudDGV = new System.Windows.Forms.DataGridView();
-            this.RefreshDataButton = new System.Windows.Forms.Button();
+            this.RefreshCompanyButton = new System.Windows.Forms.Button();
             this.SearchTB = new System.Windows.Forms.TextBox();
             this.SearchLabel = new System.Windows.Forms.Label();
             this.CompanyDGV = new System.Windows.Forms.DataGridView();
@@ -90,7 +90,7 @@ namespace Accountants_Tools
             this.CompanyPage.Controls.Add(this.UpdateRB);
             this.CompanyPage.Controls.Add(this.AddRB);
             this.CompanyPage.Controls.Add(this.CrudDGV);
-            this.CompanyPage.Controls.Add(this.RefreshDataButton);
+            this.CompanyPage.Controls.Add(this.RefreshCompanyButton);
             this.CompanyPage.Controls.Add(this.SearchTB);
             this.CompanyPage.Controls.Add(this.SearchLabel);
             this.CompanyPage.Controls.Add(this.CompanyDGV);
@@ -195,17 +195,17 @@ namespace Accountants_Tools
             this.CrudDGV.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.CrudDGV_CellLeave);
             this.CrudDGV.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.CrudDGV_RowsRemoved);
             // 
-            // RefreshDataButton
+            // RefreshCompanyButton
             // 
-            this.RefreshDataButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.RefreshDataButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RefreshDataButton.Location = new System.Drawing.Point(6, 6);
-            this.RefreshDataButton.Name = "RefreshDataButton";
-            this.RefreshDataButton.Size = new System.Drawing.Size(184, 29);
-            this.RefreshDataButton.TabIndex = 3;
-            this.RefreshDataButton.Text = "Обновить таблицу";
-            this.RefreshDataButton.UseVisualStyleBackColor = true;
-            this.RefreshDataButton.Click += new System.EventHandler(this.RefreshDataButton_Click);
+            this.RefreshCompanyButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.RefreshCompanyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RefreshCompanyButton.Location = new System.Drawing.Point(6, 6);
+            this.RefreshCompanyButton.Name = "RefreshCompanyButton";
+            this.RefreshCompanyButton.Size = new System.Drawing.Size(184, 29);
+            this.RefreshCompanyButton.TabIndex = 3;
+            this.RefreshCompanyButton.Text = "Обновить таблицу";
+            this.RefreshCompanyButton.UseVisualStyleBackColor = true;
+            this.RefreshCompanyButton.Click += new System.EventHandler(this.RefreshCompanyButton_Click);
             // 
             // SearchTB
             // 
@@ -495,7 +495,7 @@ namespace Accountants_Tools
         private System.Windows.Forms.TabPage PositionPage;
         private System.Windows.Forms.TextBox SearchTB;
         private System.Windows.Forms.Label SearchLabel;
-        private System.Windows.Forms.Button RefreshDataButton;
+        private System.Windows.Forms.Button RefreshCompanyButton;
         private System.Windows.Forms.DataGridView CrudDGV;
         private System.Windows.Forms.Label StateLabel;
         private System.Windows.Forms.RadioButton DeleteRB;

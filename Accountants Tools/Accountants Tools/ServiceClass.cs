@@ -12,54 +12,109 @@ namespace Accountants_Tools
 {
     static class ServiceClass
     {
-        public static string RemoveSpaces(string str)
+        public static string RemoveSpaces(string inputString)
         {
-            StringBuilder sb = new StringBuilder(str);
+            var resultString = new StringBuilder(inputString);
 
             do
             {
-                sb = sb.Replace("  ", " ");
+                resultString = resultString.Replace("  ", " ");
             }
-            while (sb.ToString().Contains("  "));
+            while (resultString.ToString().Contains("  "));
 
-            if (sb.Length > 0)
-            {
-                if (sb[0].ToString() == " ")
-                    sb.Remove(0, 1);
-            }
-
-            if (sb.Length > 0)
-            {
-                if (sb[sb.Length - 1].ToString() == " ")
-                    sb.Remove(sb.Length - 1, 1);
-            }
-
-            return sb.ToString();
+            return RemoveFirstAndLastSpaces(resultString.ToString());
         }
 
-        public static string RemoveAllSpaces(string str)
+        public static string RemoveFirstAndLastSpaces(string inputString)
         {
-            do
-            {
-                str = str.Replace(" ", "");
-            }
-            while (str.Contains(" "));
+            var resultString = new StringBuilder(inputString);
 
-            return str;
+            if (resultString.Length > 0)
+            {
+                if (resultString[0].ToString() == " ")
+                    resultString.Remove(0, 1);
+            }
+
+            if (resultString.Length > 0)
+            {
+                if (resultString[resultString.Length - 1].ToString() == " ")
+                    resultString.Remove(resultString.Length - 1, 1);
+            }
+
+            return resultString.ToString();
         }
 
-        public static string RemoveAllExceptLetters(string str)
+        public static string RemoveAllExceptLetters(string inputString)
         {
-            StringBuilder sb = new StringBuilder(str.Length); 
-            foreach(char c in str)
+            StringBuilder resultString = new StringBuilder(inputString.Length);
+
+            foreach(char c in inputString)
             {
                 if(char.IsLetter(c))
                 {
-                    sb.Append(c);
+                    resultString.Append(c);
                 }
             }
             
-            return sb.ToString();
+            return resultString.ToString();
+        }
+
+        public static void RemoveUnderlinesInColumns(ref DataGridView dgv)
+        {
+            for(int i = 0; i < dgv.Columns.Count; i++)
+            {
+                if(dgv.Columns[i].HeaderText.Contains("_"))
+                    dgv.Columns[i].HeaderText = dgv.Columns[i].HeaderText.Replace('_', ' ');
+            }
+        }
+
+        public static void UploadCompanyDataInDGV(ref DataGridView dgv)
+        {
+            using (var context = new EmployeeDatabaseEntities())
+            {
+                var data = from company in context.Company
+                           orderby company.id
+                           select new
+                           {
+                               ID = company.id,
+                               Название_компании = company.company_name,
+                               Фамилия_владельца = company.last_name_owner,
+                               Имя_владельца = company.first_name_owner,
+                               Отчество_владельца = company.middle_name_owner,
+                               Дата_создания_компании = company.date_of_creation,
+                               Описание_компании = company.company_description
+                           };
+
+                dgv.DataSource = data.ToList();
+            }
+        }
+
+        public static void UploadPositionsDataInDGV(ref DataGridView dgv)
+        {
+            using (var context = new EmployeeDatabaseEntities())
+            {
+                var data = from position in context.Company_positions
+                           orderby position.id
+                           select new
+                           {
+                               ID = position.id,
+                               Должность = position.name_position,
+                               Зарплата = position.salary_for_position,
+                               Описание_должности = position.description_position,
+                               Компания = position.Company.company_name
+                           };
+
+                dgv.DataSource = data.ToList();
+            }
+        }
+
+        public static void UploadCompanyNameInComboBox(ref ComboBox combobox)
+        {
+            using (var context = new EmployeeDatabaseEntities())
+            {
+                var companyName = from company in context.Company select company.company_name;
+                combobox.Items.AddRange(companyName.ToArray());
+            }
         }
 
         public static List<string> SelectedData(DataGridView dgvCompany, DataGridView dgvUpdateCompany)
@@ -96,47 +151,15 @@ namespace Accountants_Tools
             }
         }
 
-        public static void UploadCompanyInDGV(ref DataGridView dgv)
-        {
-            using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
-            {
-                var data = from company in context.Company orderby company.id
-                           select new
-                           {
-                               ID = company.id,
-                               Название_компании = company.company_name,
-                               Фамилия_владельца = company.last_name_owner,
-                               Имя_владельца = company.first_name_owner,
-                               Отчество_владельца = company.middle_name_owner,
-                               Дата_создания_компании = company.date_of_creation,
-                               Описание_компании = company.company_description
-                           };
 
-                dgv.DataSource = data.ToList();
-            }
-        }
 
-        public static void UploadPositionsInDGV(ref DataGridView dgv)
-        {
-            using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
-            {
-                var data = from position in context.Company_positions orderby position.id
-                           select new
-                           {
-                               ID = position.id,
-                               Должность = position.name_position,
-                               Зарплата = position.salary_for_position,
-                               Описание_должности = position.description_position,
-                               Компания = position.Company.company_name
-                           };
 
-                dgv.DataSource = data.ToList();
-            }
-        }
+
+
 
         public static void UploadPositionsShortInDGV(ref DataGridView dgv)
         {
-            using(EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
+            using(var context = new EmployeeDatabaseEntities())
             {
                 var data = from position in context.Company_positions orderby position.id
                            select new
@@ -153,7 +176,7 @@ namespace Accountants_Tools
 
         public static void UploadEmployeeInDGV(ref DataGridView dgv)
         {
-            using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
+            using (var context = new EmployeeDatabaseEntities())
             {
                 var data = from contract in context.Employment_contracts
                            orderby contract.id
