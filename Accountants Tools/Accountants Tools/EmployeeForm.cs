@@ -27,6 +27,7 @@ namespace Accountants_Tools
         private void EmployeeForm_Load(object sender, EventArgs e)
         {
             #region Заполнение массивов данными о элементах формы, подписка на нужные события
+
             locationRB = new Dictionary<string, Point>();
             locationRB.Add("right", new Point(AddEmployeeRB.Location.X, AddEmployeeRB.Location.Y));
             locationRB.Add("left", new Point(UpdateEmployeeRB.Location.X, UpdateEmployeeRB.Location.Y));
@@ -42,25 +43,23 @@ namespace Accountants_Tools
             AddEmployeeRB.CheckedChanged += new System.EventHandler(RB_CheckedChanged);
             UpdateEmployeeRB.CheckedChanged += new System.EventHandler(RB_CheckedChanged);
             DeleteEmployeeRB.CheckedChanged += new System.EventHandler(RB_CheckedChanged);
+
             #endregion
 
-            DateBirthDTP.MaxDate = DateTime.Now.AddYears(-14);// трудоустройство с 14 лет
-
-            ServiceClass.UploadPositionsShortInDGV(ref PositionDGV);
             #region настройка сетки должностей
+
+            ServiceClass.UploadPositionsDataShortInDGV(ref PositionDGV);
             PositionDGV.Columns[0].Width = 40;
             PositionDGV.Columns[1].Width = 225;
             PositionDGV.Columns[2].Width = 105;
             PositionDGV.Columns[3].Width = 180;
+
             #endregion
 
-            ServiceClass.UploadEmployeeInDGV(ref EmployeeDGV);
             #region настройка сетки работников
-            for (int i = 0; i < EmployeeDGV.Columns.Count; i++)
-            {
-                EmployeeDGV.Columns[i].HeaderText = EmployeeDGV.Columns[i].HeaderText.Replace('_', ' ');
-                EmployeeDGV.Columns[i].Resizable = DataGridViewTriState.False;
-            }
+
+            ServiceClass.UploadEmployeeDataInDGV(ref EmployeeDGV);
+            ServiceClass.RemoveUnderlinesInColumns(ref EmployeeDGV);
 
             EmployeeDGV.Columns[0].Width = 40;
             EmployeeDGV.Columns[1].Width = 300;
@@ -70,6 +69,8 @@ namespace Accountants_Tools
             EmployeeDGV.Columns[5].Width = 450;
             EmployeeDGV.Columns[6].Width = 150;
             #endregion
+
+            DateBirthDTP.MaxDate = DateTime.Now.AddYears(-14);// трудоустройство с 14 лет
         }
 
         private void AddEmployeeRB_CheckedChanged(object sender, EventArgs e)
@@ -82,23 +83,12 @@ namespace Accountants_Tools
 
         private void UpdateEmployeeRB_CheckedChanged(object sender, EventArgs e)
         {
-            if (UpdateEmployeeRB.Checked)
+            if (UpdateEmployeeRB.Checked || DeleteEmployeeRB.Checked)
             {
                 if (EmployeeDGV.SelectedRows.Count > 0)
                 {
-                    using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
-                    {
-                        Employment_contracts contract = context.Employment_contracts.Find(EmployeeDGV.Rows[EmployeeDGV.SelectedRows[0].Index].Cells[0].Value);
-
-                        LastNameTB.Text = contract.Employee.last_name; FirstNameTB.Text = contract.Employee.first_name; MiddleNameTB.Text = contract.Employee.middle_name;
-                        if (contract.Employee.gender == "Мужчина") MaleGenderRB.Checked = true; else FemaleGenderRB.Checked = true;
-                        DateBirthDTP.Value = contract.Employee.date_of_birth; PasportDetailTB.Text = contract.Employee.details_passport; CountryBirthTB.Text = contract.Employee.country_of_birth;
-                        ResidencyEmployeeTB.Text = contract.Employee.residency; PhoneNumberTB.Text = contract.Employee.number_phone; EmailEmployeeTB.Text = contract.Employee.email;
-                        PositionTB.Text = EmployeeDGV.Rows[EmployeeDGV.SelectedRows[0].Index].Cells[2].Value.ToString(); 
-                        CompanyTB.Text = EmployeeDGV.Rows[EmployeeDGV.SelectedRows[0].Index].Cells[4].Value.ToString();
-
-                        PositionDGV.Enabled = false; RefreshPositionButton.Enabled = false; SearchPositionTB.Enabled = false;
-                    }
+                    SelectedEmployeeData();
+                    PositionDGV.Enabled = false; RefreshPositionButton.Enabled = false; SearchPositionTB.Enabled = false;
                 }
                 else
                 {
@@ -112,27 +102,7 @@ namespace Accountants_Tools
         {
             if(DeleteEmployeeRB.Checked)
             {
-                if(EmployeeDGV.SelectedRows.Count > 0)
-                {
-                    using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
-                    {
-                        Employment_contracts contract = context.Employment_contracts.Find(EmployeeDGV.Rows[EmployeeDGV.SelectedRows[0].Index].Cells[0].Value);
-
-                        LastNameTB.Text = contract.Employee.last_name; FirstNameTB.Text = contract.Employee.first_name; MiddleNameTB.Text = contract.Employee.middle_name;
-                        if (contract.Employee.gender == "Мужчина") MaleGenderRB.Checked = true; else FemaleGenderRB.Checked = true;
-                        DateBirthDTP.Value = contract.Employee.date_of_birth; PasportDetailTB.Text = contract.Employee.details_passport; CountryBirthTB.Text = contract.Employee.country_of_birth;
-                        ResidencyEmployeeTB.Text = contract.Employee.residency; PhoneNumberTB.Text = contract.Employee.number_phone; EmailEmployeeTB.Text = contract.Employee.email;
-                        PositionTB.Text = EmployeeDGV.Rows[EmployeeDGV.SelectedRows[0].Index].Cells[2].Value.ToString();
-                        CompanyTB.Text = EmployeeDGV.Rows[EmployeeDGV.SelectedRows[0].Index].Cells[4].Value.ToString();
-
-                        PositionDGV.Enabled = false; RefreshPositionButton.Enabled = false; SearchPositionTB.Enabled = false;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Не выбран работник!");
-                    AddEmployeeRB.Checked = true;
-                }
+                UpdateEmployeeRB_CheckedChanged(null, null);
             }
         }
 
@@ -291,7 +261,7 @@ namespace Accountants_Tools
 
         private void RefreshPositionButton_Click(object sender, EventArgs e)
         {
-            ServiceClass.UploadPositionsShortInDGV(ref PositionDGV);
+            ServiceClass.UploadPositionsDataShortInDGV(ref PositionDGV);
             SearchPositionTB.Text = "";
         }
 
@@ -336,23 +306,49 @@ namespace Accountants_Tools
 
         private void CrudEmployeeButton_Click(object sender, EventArgs e)
         {
-            if(AddEmployeeRB.Checked)
+            if(AddEmployeeRB.Checked || UpdateEmployeeRB.Checked)
             {
-                if(LastNameTB.Text == "" || FirstNameTB.Text == "" || MiddleNameTB.Text == "" || LastNameTB.Text == "" || PasportDetailTB.Text == "" || CountryBirthTB.Text == "")
+                if (LastNameTB.Text == "" || FirstNameTB.Text == "" || MiddleNameTB.Text == "" || LastNameTB.Text == "" || PasportDetailTB.Text == "" || CountryBirthTB.Text == "")
                 {
                     MessageBox.Show("Не все обязательные поля заполнены!");
                     return;
                 }
+            }
 
+            if(AddEmployeeRB.Checked)
+            {
                 string gender = "";
-                if (MaleGenderRB.Checked)
-                    gender = "Мужчина";
-                else
-                    gender = "Женщина";
+                if (MaleGenderRB.Checked) gender = "Мужчина"; else gender = "Женщина";
 
                 using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
                 {
+                    var validEmployeePosition = from employee in context.Employment_contracts where 
+                                        employee.Employee.details_passport == PasportDetailTB.Text && 
+                                        employee.Company_positions.name_position == PositionTB.Text &&
+                                        employee.Company_positions.Company.company_name == CompanyTB.Text 
+                                        select employee;
+
+                    if(validEmployeePosition.ToList().Count > 0)
+                    {
+                        MessageBox.Show("Данный работник уже работает на этой должности!");
+                        return;
+                    }
+
+                    var validEmployee = from employee in context.Employee where 
+                                        employee.details_passport == PasportDetailTB.Text && 
+                                        (employee.last_name != LastNameTB.Text ||
+                                        employee.first_name != FirstNameTB.Text ||
+                                        employee.middle_name != MiddleNameTB.Text)
+                                        select employee;
+
+                    if(validEmployee.ToList().Count > 0)
+                    {
+                        MessageBox.Show("Работник с такими пасспортными данными уже существует!");
+                        return;
+                    }
+
                     #region Создание newEmployee
+
                     Employee newEmployee = new Employee()
                     {
                         last_name = LastNameTB.Text,
@@ -364,34 +360,14 @@ namespace Accountants_Tools
                         country_of_birth = CountryBirthTB.Text
                     };
 
-                    if(ResidencyEmployeeTB.Text != "")
-                    {
-                        newEmployee.residency = ResidencyEmployeeTB.Text;
-                    }
-                    else
-                    {
-                        newEmployee.residency = "Not defined";
-                    }
+                    if(ResidencyEmployeeTB.Text != "") newEmployee.residency = ResidencyEmployeeTB.Text; else newEmployee.residency = "Not defined";
 
-                    if (PhoneNumberTB.Text != "")
-                    {
-                        newEmployee.number_phone = PhoneNumberTB.Text;
-                    }
-                    else
-                    {
-                        newEmployee.number_phone = "Not defined";
-                    }
+                    if (PhoneNumberTB.Text != "") newEmployee.number_phone = PhoneNumberTB.Text; else newEmployee.number_phone = "Not defined";
 
-                    if (EmailEmployeeTB.Text != "")
-                    {
-                        newEmployee.email = EmailEmployeeTB.Text;
-                    }
-                    else
-                    {
-                        newEmployee.email = "Not defined";
-                    }
+                    if (EmailEmployeeTB.Text != "") newEmployee.email = EmailEmployeeTB.Text; else newEmployee.email = "Not defined";
 
                     context.Employee.Add(newEmployee);
+
                     #endregion
 
                     int idNewEmployee = (int) newEmployee.id;
@@ -416,22 +392,23 @@ namespace Accountants_Tools
             }
             else if (UpdateEmployeeRB.Checked)
             {
-                if (LastNameTB.Text == "" || FirstNameTB.Text == "" || MiddleNameTB.Text == "" || LastNameTB.Text == "" || PasportDetailTB.Text == "" || CountryBirthTB.Text == "")
-                {
-                    MessageBox.Show("Не все обязательные поля заполнены!");
-                    return;
-                }
-
                 using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
                 {
                     Employment_contracts contract = context.Employment_contracts.Find(EmployeeDGV.Rows[EmployeeDGV.SelectedRows[0].Index].Cells[0].Value);
 
-                    contract.Employee.last_name = LastNameTB.Text; contract.Employee.first_name = FirstNameTB.Text; contract.Employee.middle_name = MiddleNameTB.Text;
-                    if (MaleGenderRB.Checked) contract.Employee.gender = "Мужчина"; else contract.Employee.gender = "Женщина";
-                    contract.Employee.date_of_birth = DateBirthDTP.Value; contract.Employee.details_passport = PasportDetailTB.Text; contract.Employee.country_of_birth = CountryBirthTB.Text;
-                    if (ResidencyEmployeeTB.Text != "") contract.Employee.residency = ResidencyEmployeeTB.Text; else contract.Employee.residency = "Not defined";
-                    if (PhoneNumberTB.Text != "") contract.Employee.number_phone = PhoneNumberTB.Text; else contract.Employee.number_phone = "Not defined";
-                    if (EmailEmployeeTB.Text != "") contract.Employee.email = EmailEmployeeTB.Text; else contract.Employee.email = "Not defined";
+                    var validDetailsPassport = from employee in context.Employee where employee.id == contract.id_employee select employee.details_passport;
+                    string passport = validDetailsPassport.First();
+                    var validEmployee = from employee in context.Employee where employee.details_passport == passport select employee;
+
+                    foreach (Employee employee in validEmployee)
+                    {
+                        employee.last_name = LastNameTB.Text; employee.first_name = FirstNameTB.Text; employee.middle_name = MiddleNameTB.Text;
+                        if (MaleGenderRB.Checked) employee.gender = "Мужчина"; else employee.gender = "Женщина";
+                        employee.date_of_birth = DateBirthDTP.Value; employee.details_passport = PasportDetailTB.Text; employee.country_of_birth = CountryBirthTB.Text;
+                        if (ResidencyEmployeeTB.Text != "") employee.residency = ResidencyEmployeeTB.Text; else employee.residency = "Not defined";
+                        if (PhoneNumberTB.Text != "") employee.number_phone = PhoneNumberTB.Text; else employee.number_phone = "Not defined";
+                        if (EmailEmployeeTB.Text != "") employee.email = EmailEmployeeTB.Text; else employee.email = "Not defined";
+                    }
 
                     context.SaveChanges();
                     MessageBox.Show("Данные о работнике успешно обновлены!");
@@ -463,7 +440,7 @@ namespace Accountants_Tools
 
         private void RefreshEmployeeButton_Click(object sender, EventArgs e)
         {
-            ServiceClass.UploadEmployeeInDGV(ref EmployeeDGV);
+            ServiceClass.UploadEmployeeDataInDGV(ref EmployeeDGV);
             SearchEmployeeTB.Text = "";
         }
 
@@ -508,18 +485,28 @@ namespace Accountants_Tools
             {
                 if (EmployeeDGV.SelectedRows.Count > 0)
                 {
-                    using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
-                    {
-                        Employment_contracts contract = context.Employment_contracts.Find(EmployeeDGV.Rows[EmployeeDGV.SelectedRows[0].Index].Cells[0].Value);
-
-                        LastNameTB.Text = contract.Employee.last_name; FirstNameTB.Text = contract.Employee.first_name; MiddleNameTB.Text = contract.Employee.middle_name;
-                        if (contract.Employee.gender == "Мужчина") MaleGenderRB.Checked = true; else FemaleGenderRB.Checked = true;
-                        DateBirthDTP.Value = contract.Employee.date_of_birth; PasportDetailTB.Text = contract.Employee.details_passport; CountryBirthTB.Text = contract.Employee.country_of_birth;
-                        ResidencyEmployeeTB.Text = contract.Employee.residency; PhoneNumberTB.Text = contract.Employee.number_phone; EmailEmployeeTB.Text = contract.Employee.email;
-                        PositionTB.Text = EmployeeDGV.Rows[EmployeeDGV.SelectedRows[0].Index].Cells[2].Value.ToString();
-                        CompanyTB.Text = EmployeeDGV.Rows[EmployeeDGV.SelectedRows[0].Index].Cells[4].Value.ToString();
-                    }
+                    SelectedEmployeeData();
                 }
+            }
+        }
+
+        private void SelectedEmployeeData()
+        {
+            using (EmployeeDatabaseEntities context = new EmployeeDatabaseEntities())
+            {
+                Employment_contracts contract = context.Employment_contracts.Find(EmployeeDGV.Rows[EmployeeDGV.SelectedRows[0].Index].Cells[0].Value);
+
+                LastNameTB.Text = contract.Employee.last_name; FirstNameTB.Text = contract.Employee.first_name; MiddleNameTB.Text = contract.Employee.middle_name;
+
+                if (contract.Employee.gender == "Мужчина") MaleGenderRB.Checked = true; else FemaleGenderRB.Checked = true;
+
+                DateBirthDTP.Value = contract.Employee.date_of_birth; PasportDetailTB.Text = contract.Employee.details_passport; CountryBirthTB.Text = contract.Employee.country_of_birth;
+
+                ResidencyEmployeeTB.Text = contract.Employee.residency; PhoneNumberTB.Text = contract.Employee.number_phone; EmailEmployeeTB.Text = contract.Employee.email;
+
+                PositionTB.Text = EmployeeDGV.Rows[EmployeeDGV.SelectedRows[0].Index].Cells[2].Value.ToString();
+
+                CompanyTB.Text = EmployeeDGV.Rows[EmployeeDGV.SelectedRows[0].Index].Cells[4].Value.ToString();
             }
         }
     }

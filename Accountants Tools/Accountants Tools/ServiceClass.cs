@@ -151,13 +151,7 @@ namespace Accountants_Tools
             }
         }
 
-
-
-
-
-
-
-        public static void UploadPositionsShortInDGV(ref DataGridView dgv)
+        public static void UploadPositionsDataShortInDGV(ref DataGridView dgv)
         {
             using(var context = new EmployeeDatabaseEntities())
             {
@@ -174,7 +168,7 @@ namespace Accountants_Tools
             }
         }
 
-        public static void UploadEmployeeInDGV(ref DataGridView dgv)
+        public static void UploadEmployeeDataInDGV(ref DataGridView dgv)
         {
             using (var context = new EmployeeDatabaseEntities())
             {
