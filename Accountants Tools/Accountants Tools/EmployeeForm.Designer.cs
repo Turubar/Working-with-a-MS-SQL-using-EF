@@ -84,9 +84,9 @@ namespace Accountants_Tools
             this.EmployeeDGV.MultiSelect = false;
             this.EmployeeDGV.Name = "EmployeeDGV";
             this.EmployeeDGV.RowHeadersVisible = false;
-            this.EmployeeDGV.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.EmployeeDGV.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.EmployeeDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.EmployeeDGV.Size = new System.Drawing.Size(1660, 389);
+            this.EmployeeDGV.Size = new System.Drawing.Size(1660, 379);
             this.EmployeeDGV.TabIndex = 0;
             this.EmployeeDGV.SelectionChanged += new System.EventHandler(this.EmployeeDGV_SelectionChanged);
             // 
@@ -120,6 +120,7 @@ namespace Accountants_Tools
             this.AddEmployeeRB.Name = "AddEmployeeRB";
             this.AddEmployeeRB.Size = new System.Drawing.Size(123, 25);
             this.AddEmployeeRB.TabIndex = 11;
+            this.AddEmployeeRB.TabStop = true;
             this.AddEmployeeRB.Text = "Добавление";
             this.AddEmployeeRB.UseVisualStyleBackColor = true;
             this.AddEmployeeRB.CheckedChanged += new System.EventHandler(this.AddEmployeeRB_CheckedChanged);

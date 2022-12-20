@@ -31,7 +31,6 @@ namespace Accountants_Tools
         {
             this.EmployeeFormButton = new System.Windows.Forms.Button();
             this.CompanyFormButton = new System.Windows.Forms.Button();
-            this.AccountingFormButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // EmployeeFormButton
@@ -43,7 +42,7 @@ namespace Accountants_Tools
             this.EmployeeFormButton.Name = "EmployeeFormButton";
             this.EmployeeFormButton.Size = new System.Drawing.Size(250, 60);
             this.EmployeeFormButton.TabIndex = 0;
-            this.EmployeeFormButton.Text = "Сотрудники";
+            this.EmployeeFormButton.Text = "Работники";
             this.EmployeeFormButton.UseVisualStyleBackColor = true;
             this.EmployeeFormButton.Click += new System.EventHandler(this.EmployeeFormButton_Click);
             // 
@@ -60,25 +59,12 @@ namespace Accountants_Tools
             this.CompanyFormButton.UseVisualStyleBackColor = true;
             this.CompanyFormButton.Click += new System.EventHandler(this.CompanyFormButton_Click);
             // 
-            // AccountingFormButton
-            // 
-            this.AccountingFormButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.AccountingFormButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lime;
-            this.AccountingFormButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.AccountingFormButton.Location = new System.Drawing.Point(125, 293);
-            this.AccountingFormButton.Name = "AccountingFormButton";
-            this.AccountingFormButton.Size = new System.Drawing.Size(250, 60);
-            this.AccountingFormButton.TabIndex = 0;
-            this.AccountingFormButton.Text = "Бухгалтерский учет";
-            this.AccountingFormButton.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(484, 461);
-            this.Controls.Add(this.AccountingFormButton);
+            this.ClientSize = new System.Drawing.Size(484, 348);
             this.Controls.Add(this.CompanyFormButton);
             this.Controls.Add(this.EmployeeFormButton);
             this.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -95,7 +81,6 @@ namespace Accountants_Tools
 
         private System.Windows.Forms.Button EmployeeFormButton;
         private System.Windows.Forms.Button CompanyFormButton;
-        private System.Windows.Forms.Button AccountingFormButton;
     }
 }
 
